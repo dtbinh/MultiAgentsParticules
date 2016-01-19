@@ -89,15 +89,15 @@ public class Agent {
 			}else{
 				//si on tape sur le coté droit
 				if(environnement.getWidth() == positionX + 1 && environnement.getHeight() != positionY - 1){
-					direction = Direction.NORTH_WEST;
+					direction = Direction.SOUTH_WEST;
 				}
 				
 				// si on tape sur le bas
 				if(environnement.getHeight() == positionY - 1 && environnement.getWidth() != positionX + 1){
-					direction = Direction.SOUTH_EAST;
+					direction = Direction.NORTH_EAST;
 				}
 				
-				// si on tape le coin bas droite
+				// si on tape le coin du bas droite
 				if(environnement.getWidth() == positionX + 1  && environnement.getHeight() == positionY - 1){
 					direction = Direction.NORTH_WEST;
 				}
@@ -113,8 +113,26 @@ public class Agent {
 		}
 		
 		// BAS GAUCHE
-		if (environnement.getEspace()[positionX - 1][positionY - 1]) {
-
+		if(direction == Direction.SOUTH_WEST){
+			// verification de case vide 
+			if(environnement.getEspace()[positionX - 1][positionY - 1]){
+				if(positionY - 1 == 0){
+					direction = Direction.NORTH_EAST;
+				}
+			}else{
+				// si on tape dans le coté gauche
+				if(positionX - 1 == 0 && environnement.getHeight() == positionY - 1){
+					direction = Direction.SOUTH_EAST;
+				}
+				//si on tape sur le bas
+				if(environnement.getWidth() == positionX - 1 && positionY - 1 == 0){
+					direction = Direction.NORTH_WEST;
+				}
+				// si on tape dans le coin bas gauche
+				if(positionX - 1 == 0 && positionY - 1 == 0){
+					direction = Direction.NORTH_EAST;
+				}				
+			}
 		}
 		
 		// GAUCHE
@@ -131,10 +149,10 @@ public class Agent {
 			// verification de case vide 
 			if(environnement.getEspace()[positionX - 1][positionY + 1]){
 				if(environnement.getHeight() == positionY + 1){
-					direction = Direction.SOUTH_WEST;
+					direction = Direction.SOUTH_EAST;
 				}
 			}else{
-				//si on tape sur le coté droit
+				//si on tape sur le coté gauche
 				if(environnement.getWidth() == positionX + 1){
 					direction = Direction.NORTH_EAST;
 				}
@@ -142,6 +160,10 @@ public class Agent {
 				// si on tape sur le haut
 				if(environnement.getHeight() == positionY + 1){
 					direction = Direction.SOUTH_WEST;
+				}
+				// si on tape dans le coin haut gauche
+				if(positionX - 1 == 0 && environnement.getHeight() == positionY + 1){
+					direction = Direction.SOUTH_EAST;
 				}
 			}
 		}
