@@ -9,7 +9,7 @@ public class SMA extends Observable{
 
 	private static Environnement environnement = new Environnement();
 	private static List<Agent> agents = new LinkedList<Agent>();
-	private static View view = new View();
+	private static View view;
 	
 	public void init(int nbAgents, int height, int width){
 		environnement.setHeight(height);
@@ -18,9 +18,14 @@ public class SMA extends Observable{
 		environnement.init(nbAgents);
 	}
 	
+	public static Environnement getEnvironnement(){
+		return environnement;
+	}
+	
 	public void run(int nbRounds) throws InterruptedException{
 		Collections.shuffle(agents);
 		for(int i = 0 ; i < nbRounds ; i++){
+			System.out.println("********** ROUND "+ nbRounds +" *********");
 			for(Agent a : agents){
 				a.doIt();
 			}
