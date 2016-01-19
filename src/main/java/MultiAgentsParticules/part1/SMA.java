@@ -25,12 +25,16 @@ public class SMA extends Observable{
 	public void run(int nbRounds) throws InterruptedException{
 		Collections.shuffle(agents);
 		for(int i = 0 ; i < nbRounds ; i++){
-			System.out.println("********** ROUND "+ nbRounds +" *********");
+			//System.out.println("********** ROUND "+ i +" *********");
 			for(Agent a : agents){
 				a.doIt();
 			}
 		}
 		this.setChanged();
 		Thread.sleep(1000);
+	}
+	
+	public List<Agent> getAgents(){
+		return agents;
 	}
 }

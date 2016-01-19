@@ -5,9 +5,9 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		
 		SMA sma = new SMA();
-		sma.init(10,20,20);
-		sma.run(2);
-	
-		//View v = new View(20,500,500);
+		sma.init(1000,200,200);
+		//sma.run(100);
+		View v = new View(sma);
+		sma.addObserver(v);
 	}
 }

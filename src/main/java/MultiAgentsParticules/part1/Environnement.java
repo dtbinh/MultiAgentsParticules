@@ -18,7 +18,7 @@ public class Environnement {
 		agents = new LinkedList<Agent>();
 		this.height = height;
 		this.width = width;
-		this.espace = new boolean[height + 1][width + 1];
+		this.espace = new boolean[height][width];
 	}
 	
 	public Environnement(){
@@ -28,19 +28,18 @@ public class Environnement {
 	public void init(int nbAgents){
 		Agent tmp;
 		Random r = new Random();
-		int height;
-		int width;
-		this.espace = new boolean[this.height + 1][this.width + 1];
-
+		int posX;
+		int posY;
+		this.espace = new boolean[height][width];
 		for(int i = 0 ; i < nbAgents ; i++){
-			height = r.nextInt(this.height+1);
-			width = r.nextInt(this.width+1);
-			while(positionsOfAgents.contains("["+height+";"+width+"]")){
-				height = r.nextInt(this.height+1);
-				width = r.nextInt(this.width+1);
+			posX = r.nextInt(width);
+			posY = r.nextInt(height);
+			while(this.espace[posX][posY]){
+				posX = r.nextInt(width);
+				posY = r.nextInt(height);
 			}
-			tmp = new Agent(height,width);
-			this.espace[height][width] = true;
+			tmp = new Agent(posX,posY);
+			this.espace[posX][posY] = true;
 			tmp.setId(agents.size());
 			agents.add(tmp);
 		}
