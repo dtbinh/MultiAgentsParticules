@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -70,7 +71,9 @@ public class View implements Observer {
 				Point fillCell = fillCells.get(i);
 				int cellX = 10 + (fillCell.x * 10);
 				int cellY = 10 + (fillCell.y * 10);
-				g.setColor(Color.RED);
+				Random r = new Random();
+				Color couleur = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
+				g.setColor(couleur);
 				g.fillOval(cellX, cellY, 10, 10);
 			}
 			g.setColor(Color.BLACK);
