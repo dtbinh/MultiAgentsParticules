@@ -1,4 +1,4 @@
-package MultiAgentsParticules.part1;
+package MultiAgentsParticules;
 
 import java.util.Collections;
 import java.util.LinkedList;

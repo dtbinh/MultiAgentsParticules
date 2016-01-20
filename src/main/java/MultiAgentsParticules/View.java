@@ -1,4 +1,4 @@
-package MultiAgentsParticules.part1;
+package MultiAgentsParticules;
 
 import java.awt.Color;
 import java.awt.Dimension;

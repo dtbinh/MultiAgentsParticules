@@ -1,8 +1,10 @@
-package MultiAgentsParticules.part1;
+package MultiAgentsParticules;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import MultiAgentsParticules.bille.Bille;
 
 public class Environnement {
 
@@ -38,7 +40,7 @@ public class Environnement {
 				posX = r.nextInt(width);
 				posY = r.nextInt(height);
 			}
-			tmp = new Agent(posX,posY);
+			tmp = new Bille(posX,posY);
 			this.espace[posX][posY] = true;
 			tmp.setId(agents.size());
 			agents.add(tmp);
