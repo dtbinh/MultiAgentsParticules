@@ -14,11 +14,11 @@ public class Environnement {
 	// all positions
 	private List<String> positionsOfAgents = new LinkedList<String>();
 	
-	public Environnement(int height, int width){
+	public Environnement(int width, int height){
 		agents = new LinkedList<Agent>();
 		this.height = height;
 		this.width = width;
-		this.espace = new boolean[height][width];
+		this.espace = new boolean[width][height];
 	}
 	
 	public Environnement(){
@@ -30,7 +30,7 @@ public class Environnement {
 		Random r = new Random();
 		int posX;
 		int posY;
-		this.espace = new boolean[height][width];
+		this.espace = new boolean[width][height];
 		for(int i = 0 ; i < nbAgents ; i++){
 			posX = r.nextInt(width);
 			posY = r.nextInt(height);
@@ -69,7 +69,7 @@ public class Environnement {
 		return this.espace;
 	}
 	
-	public boolean isTaken(int height, int width){
-		return this.espace[height][width];
+	public boolean isTaken(int width, int height){
+		return this.espace[width][height];
 	}
 }

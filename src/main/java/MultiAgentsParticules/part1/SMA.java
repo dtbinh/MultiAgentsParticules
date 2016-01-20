@@ -11,7 +11,7 @@ public class SMA extends Observable{
 	private static List<Agent> agents = new LinkedList<Agent>();
 	private static View view;
 	
-	public void init(int nbAgents, int height, int width){
+	public void init(int nbAgents, int width, int height){
 		environnement.setHeight(height);
 		environnement.setWidth(width);
 		environnement.setAgents(agents);
@@ -29,9 +29,10 @@ public class SMA extends Observable{
 			for(Agent a : agents){
 				a.doIt();
 			}
+			this.setChanged();
+			notifyObservers();
+			Thread.sleep(20);
 		}
-		this.setChanged();
-		Thread.sleep(1000);
 	}
 	
 	public List<Agent> getAgents(){
