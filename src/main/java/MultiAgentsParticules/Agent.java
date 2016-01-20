@@ -1,5 +1,6 @@
 package MultiAgentsParticules;
 
+import java.awt.Color;
 import java.util.Random;
 
 public abstract class Agent {
@@ -7,6 +8,7 @@ public abstract class Agent {
 	protected int id;
 	protected int positionX;
 	protected int positionY;
+	protected Color couleur;
 	/**
 	 * DIRECTION X and Y 
 	 * HAUT | 0 | 1 | 
@@ -25,12 +27,13 @@ public abstract class Agent {
 	public Agent(int positionX, int positionY) {
 		this.setPositionX(positionX);
 		this.setPositionY(positionY);
+		this.couleur = generateColor();
 	}
 
 	// TODO : vérifier à l'initiation que 2 agents ne sont pas côtes à côtes
 	// sinon il se peut qu'un agent soit déja au bord et qu'il veuille 
 	// aller dans le sens contraire
-	public abstract void doIt(); 
+	public abstract void doIt();
 	
 	public void deplacement(Direction direction){
 		switch(direction){
@@ -68,6 +71,15 @@ public abstract class Agent {
 	public Direction generateInitDirection(){
 		Random r = new Random();
 		return Direction.values()[r.nextInt(Direction.values().length)];
+	}
+	
+	public Color generateColor(){
+		Random rand = new Random();
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+		
+		return new Color(r, g, b);
 	}
 
 	public int getPositionX() {
