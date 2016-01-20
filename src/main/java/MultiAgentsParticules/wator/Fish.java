@@ -7,7 +7,7 @@ public class Fish extends Agent {
 	public Fish(int positionX, int positionY) {
 		super(positionX, positionY);
 	}
-
+	
 	public void doIt() {
 		
 	}
