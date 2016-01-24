@@ -8,7 +8,7 @@ import MultiAgentsParticules.bille.Bille;
 
 public class Environnement {
 
-	private boolean[][] espace; // not used now
+	private boolean[][] espace;
 	private int height;
 	private int width;
 	// all agents
