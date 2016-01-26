@@ -27,7 +27,7 @@ public class SMA extends Observable{
 		for(int i = 0 ; i < nbRounds ; i++){
 			//System.out.println("********** ROUND "+ i +" *********");
 			for(Agent a : agents){
-				a.doIt();
+				a.doItToric();
 			}
 			this.setChanged();
 			notifyObservers();

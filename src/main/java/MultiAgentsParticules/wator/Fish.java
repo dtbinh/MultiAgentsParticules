@@ -40,4 +40,10 @@ public class Fish extends Agent {
 		
 	}
 
+	@Override
+	public void doItToric() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

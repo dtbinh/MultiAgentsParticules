@@ -30,6 +30,7 @@ public abstract class Agent {
 	// sinon il se peut qu'un agent soit déja au bord et qu'il veuille
 	// aller dans le sens contraire
 	public abstract void doIt();
+	public abstract void doItToric();
 
 	public void deplacement(Direction direction) {
 		switch (direction) {

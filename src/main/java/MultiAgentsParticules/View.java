@@ -90,11 +90,11 @@ public class View implements Observer {
 			g.drawRect(10, 10, width, height);
 
 			for (int i = 10; i <= width; i += 10) {
-				//g.drawLine(i, 10, i, height + 10);
+				g.drawLine(i, 10, i, height + 10);
 			}
 
 			for (int i = 10; i <= height; i += 10) {
-				//g.drawLine(10, i, width + 10, i);
+				g.drawLine(10, i, width + 10, i);
 			}
 		}
 		
