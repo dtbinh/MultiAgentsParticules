@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
-
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.Screen;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,6 +34,9 @@ public class ViewJFX extends Application implements Observer{
     public static ObservableList<Circle> lstCircle;
 	
 	public ViewJFX() {
+		
+		
+		
 		sma = Main.getSma();
 		sma.addObserver(this);
 		canvas = new Pane();
@@ -55,7 +59,7 @@ public class ViewJFX extends Application implements Observer{
 			Circle point = new Circle();
 	        point.setCenterX(a.getPositionX());
 	        point.setCenterY(a.getPositionY());
-	        point.setRadius(2);
+	        point.setRadius(1.5);
 	        
 	        point.setFill(Color.rgb(a.getR(), a.getG(), a.getB(), .99));
 	        MapAgent.mapAgent.put(a, point);
@@ -68,7 +72,7 @@ public class ViewJFX extends Application implements Observer{
         this.launch();
 	}
 	public void launch() throws InterruptedException{
-        final Timeline loop = new Timeline(new KeyFrame(Duration.millis(30), new EventHandler<ActionEvent>() {
+        final Timeline loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent t) {
                 sma.round();
             }
@@ -84,9 +88,12 @@ public class ViewJFX extends Application implements Observer{
 
 	public void update(Observable o, Object arg) {
 		
-		for(int i = 0 ; i < sma.getAgents().size() ; i++){
-			MapAgent.mapAgent.get(sma.getAgents().get(i)).relocate(sma.getAgents().get(i).getPositionX(), sma.getAgents().get(i).getPositionY());
-	  	}
+//		for(int i = 0 ; i < sma.getAgents().size() ; i++){
+//			MapAgent.mapAgent.get(sma.getAgents().get(i)).relocate(sma.getAgents().get(i).getPositionX(), sma.getAgents().get(i).getPositionY());
+//	  	}
+		for(Agent a : sma.getAgents()){
+			MapAgent.mapAgent.get(a).relocate(a.getPositionX(), a.getPositionY());
+		}
 
 	}
 

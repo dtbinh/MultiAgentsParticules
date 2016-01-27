@@ -27,7 +27,7 @@ public class SMA extends Observable{
 		for(int i = 0 ; i < nbRounds ; i++){
 			//System.out.println("********** ROUND "+ i +" *********");
 		this.round();
-			Thread.sleep(100);
+			Thread.sleep(1000);
 		}
 	}
 	

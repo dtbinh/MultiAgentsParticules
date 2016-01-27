@@ -1,5 +1,7 @@
 package MultiAgentsParticules;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class Main {
 	
@@ -14,7 +16,10 @@ public class Main {
 //		v.launch();
 		
 		setSma(new SMA());
-		getSma().init(2000,1000,1000);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		getSma().init(20000,width,height);
 		ViewJFX v = new ViewJFX();
 		getSma().addObserver(v);
 		v.show();
