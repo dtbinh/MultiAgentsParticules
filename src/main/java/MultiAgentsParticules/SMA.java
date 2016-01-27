@@ -26,15 +26,19 @@ public class SMA extends Observable{
 		Collections.shuffle(agents);
 		for(int i = 0 ; i < nbRounds ; i++){
 			//System.out.println("********** ROUND "+ i +" *********");
-			for(Agent a : agents){
-				a.doItToric();
-			}
-			this.setChanged();
-			notifyObservers();
+		this.round();
 			Thread.sleep(100);
 		}
 	}
 	
+	public void round() {
+		for(Agent a : agents){
+			a.doItToric();
+		}
+		this.setChanged();
+		notifyObservers();
+	}
+
 	public List<Agent> getAgents(){
 		return agents;
 	}

@@ -4,6 +4,9 @@ import MultiAgentsParticules.Agent;
 
 public class Shark extends Agent {
 
+	private static final int nbShark = 0;
+	private static final int starv = 0;
+	
 	public Shark(int positionX, int positionY) {
 		super(positionX, positionY);
 	}

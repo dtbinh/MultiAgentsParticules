@@ -192,7 +192,7 @@ public class Bille extends Agent {
 			initialisation = false;
 		}
 
-		//System.out.println(direction);
+//		System.out.println(direction);
 		
 		// NORTH
 		if (direction == Direction.NORTH) {
@@ -202,9 +202,9 @@ public class Bille extends Agent {
 				positionY = 0;
 			}
 			
-			if((positionY + 1) < environnement.getHeight() && !isTaken(positionX, positionY + 1)){
-				if(environnement.getEspace()[positionX][positionY + 1]){
-					direction = Direction.NORTH;
+			if(environnement.getEspace()[positionX][positionY + 1]){
+				if((positionY + 1) < environnement.getHeight() && !isTaken(positionX, positionY + 1)){
+					direction = Direction.SOUTH;
 				}
 				else
 					direction = Direction.NONE;

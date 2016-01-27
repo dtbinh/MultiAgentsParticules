@@ -9,6 +9,9 @@ public abstract class Agent {
 	protected int positionX;
 	protected int positionY;
 	protected Color couleur;
+	protected int r;
+	protected int g;
+	protected int b;
 	/**
 	 * DIRECTION X and Y HAUT | 0 | 1 | HAUT DROITE | 1 | 1 | DROITE | 1 | 0 |
 	 * BAS DROITE | 1 | -1 | BAS | 0 | -1 | BAS GAUCHE | -1 | -1 | GAUCHE | -1 |
@@ -24,6 +27,10 @@ public abstract class Agent {
 		this.setPositionY(positionY);
 
 		this.setColor(generateColor());
+		Random rand = new Random();
+		r = rand.nextInt(256);
+		g = rand.nextInt(256);
+		b = rand.nextInt(256);
 	}
 
 	// TODO : vérifier à l'initiation que 2 agents ne sont pas côtes à côtes
@@ -116,6 +123,18 @@ public abstract class Agent {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	public int getR(){
+		return r;
+	}
+	
+	public int getG(){
+		return g;
+	}
+	
+	public int getB(){
+		return b;
 	}
 
 	private Color generateColor() {
