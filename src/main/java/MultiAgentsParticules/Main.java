@@ -19,7 +19,7 @@ public class Main {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
-		getSma().init(20000,width,height);
+		getSma().init(10000,width,height);
 		ViewJFX v = new ViewJFX();
 		getSma().addObserver(v);
 		v.show();

@@ -54,18 +54,29 @@ public class ViewJFX extends Application implements Observer{
 
 		primaryStage.setScene(scene);
 //		sma.run(100000);
-        for(int i = 0 ; i < sma.getAgents().size() ; i++){
-			Agent a = sma.getAgents().get(i);
+		
+		for(Agent a : sma.getAgents()){
 			Circle point = new Circle();
 	        point.setCenterX(a.getPositionX());
 	        point.setCenterY(a.getPositionY());
 	        point.setRadius(1.5);
-	        
 	        point.setFill(Color.rgb(a.getR(), a.getG(), a.getB(), .99));
 	        MapAgent.mapAgent.put(a, point);
 	        circle.add(point);
-	        
 		}
+		
+//        for(int i = 0 ; i < sma.getAgents().size() ; i++){
+//			Agent a = sma.getAgents().get(i);
+//			Circle point = new Circle();
+//	        point.setCenterX(a.getPositionX());
+//	        point.setCenterY(a.getPositionY());
+//	        point.setRadius(1.5);
+//	        
+//	        point.setFill(Color.rgb(a.getR(), a.getG(), a.getB(), .99));
+//	        MapAgent.mapAgent.put(a, point);
+//	        circle.add(point);
+//	        
+//		}
         lstCircle.addAll(circle);
         canvas.getChildren().addAll(lstCircle);
         primaryStage.show();
