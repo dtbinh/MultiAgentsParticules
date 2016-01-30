@@ -17,10 +17,24 @@ public class Fish extends Agent {
 	public Fish(int positionX, int positionY, int nbCycleReproduction) {
 		super(positionX, positionY);
 		this.setColor(Color.CYAN);
+		r = Color.CYAN.getRed();
+		g = Color.CYAN.getGreen();
+		b = Color.CYAN.getBlue();
 		this.setType(TypeOfAgentEnum.FISH);
 		this.setNbCycleReproduction(nbCycleReproduction);
 	}
 
+	/*
+	 * reproduction donner un temps fix de reproduction, si ce temps est
+	 * depassé, le poisson se deplace et un autre poisson se crée a ca place
+	 * avec sa propre direction
+	 */
+
+	/*
+	 * deplacement si je trouve en poisson ou un shark je change de dirrecion si
+	 * je trouve un bord je change de direction
+	 * 
+	 */
 	public void doIt(boolean torique) {
 		List<DirectionEnum> list = possibilities(torique);
 		if (list.isEmpty()) {
@@ -37,7 +51,7 @@ public class Fish extends Agent {
 				Agent baby = new Fish(positionX, positionY, nbCycleReproduction);
 				SMA.getAgents().add(baby);
 				environnement.getEspace()[positionX][positionY] = baby;
-				deplacement(direction,torique);
+				deplacement(direction, torique);
 				environnement.getEspace()[positionX][positionY] = this;
 			} else {
 				environnement.getEspace()[positionX][positionY] = null;

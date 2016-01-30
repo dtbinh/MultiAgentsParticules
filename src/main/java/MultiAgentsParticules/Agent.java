@@ -14,6 +14,10 @@ public abstract class Agent {
 	protected int id;
 	protected int positionX;
 	protected int positionY;
+	protected Color couleur;
+	protected int r;
+	protected int g;
+	protected int b;
 	/**
 	 * DIRECTION X and Y HAUT | 0 | 1 | HAUT DROITE | 1 | 1 | DROITE | 1 | 0 |
 	 * BAS DROITE | 1 | -1 | BAS | 0 | -1 | BAS GAUCHE | -1 | -1 | GAUCHE | -1 |
@@ -120,6 +124,7 @@ public abstract class Agent {
 			break;
 		default:
 			;
+
 		}
 	}
 
@@ -127,6 +132,7 @@ public abstract class Agent {
 		Random r = new Random();
 		return DirectionEnum.values()[r.nextInt(DirectionEnum.values().length - 1)];
 	}
+	
 
 	public int getPositionX() {
 		return positionX;
@@ -172,15 +178,7 @@ public abstract class Agent {
 	public Color getColor() {
 		return color;
 	}
-
-	protected Color generateColor() {
-		Random rand = new Random();
-		float r = rand.nextFloat();
-		float g = rand.nextFloat();
-		float b = rand.nextFloat();
-		return new Color(r, g, b);
-	}
-
+	
 	public boolean isTaken(int width, int height) {
 		return this.environnement.getEspace()[width][height] != null;
 	}
@@ -195,5 +193,17 @@ public abstract class Agent {
 
 	public void setNbCycleReproduction(int nbCycleReproduction) {
 		this.nbCycleReproduction = nbCycleReproduction;
+	}
+	
+	public int getR(){
+		return r;
+	}
+	
+	public int getG(){
+		return g;
+	}
+	
+	public int getB(){
+		return b;
 	}
 }

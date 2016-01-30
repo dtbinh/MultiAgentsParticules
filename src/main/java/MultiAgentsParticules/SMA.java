@@ -70,21 +70,21 @@ public class SMA extends Observable{
 	}
 
 
-	public void run(int nbRounds) throws InterruptedException{
+	public void run(boolean torique) throws InterruptedException{
 		Collections.shuffle(agents);
 		List<Agent> list;
-		for(int i = 0 ; i < nbRounds ; i++){
+		//for(int i = 0 ; i < nbRounds ; i++){
 			//System.out.println("********** ROUND "+ i +" *********");
 			list = new ArrayList<Agent>(agents);
 			//Collections.copy(list , agents);
 			for(Agent a : list){
-				a.doIt(true);
+				a.doIt(torique);
 			}
 			this.setChanged();
 			notifyObservers();
-			Thread.sleep(40);
+			//Thread.sleep(40);
 			//nbTypeOfAgent();
-		}
+		//}
 	}
 	
 	public static void nbTypeOfAgent(){

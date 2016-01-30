@@ -18,15 +18,41 @@ public class Shark extends Agent {
 	private int compteurNbCycleDeath;
 	private static int compteurReproduction = 0;
 
+	private static final int nbShark = 0;
+	private static final int starv = 0;
+	
 	public Shark(int positionX, int positionY, int nbCycleReproduction, int nbCycleDeath) {
 		super(positionX, positionY);
 		this.setColor(Color.BLACK);
+		r = Color.BLACK.getRed();
+		g = Color.BLACK.getGreen();
+		b = Color.BLACK.getBlue();
 		this.setType(TypeOfAgentEnum.SHARK);
 		this.setNbCycleReproduction(nbCycleReproduction);
 		this.setNbCycleDeath(nbCycleDeath);
 		compteurNbCycleDeath = nbCycleDeath;
 	}
 
+	/*
+	 * Deplacement
+	 * je me deplace a partir d'une direction
+	 * nord
+	 * sud
+	 * est
+	 * west
+	 */
+	
+	/*
+	 * Reproduction
+	 * au bout d'un nombre de deplacement donné je me reproduit
+	 */
+	
+	/*
+	 * Manger
+	 * si je trouve un poisson dans une des cases adjascente, je prend sa place et le poisson disparait
+	 * si je mange pas pendant un temps donné ou un nombre de deplacement donné je meurs(je disparrait)
+	 * 
+	 */
 	public void doIt(boolean torique) {
 		Random r = new Random();
 		if (compteurNbCycleDeath == 0) {
