@@ -32,11 +32,11 @@ public class View implements Observer {
 	public View(SMA sma) throws InterruptedException {
 		this.sma = sma;
 		frame = new JFrame();
-		frame.setPreferredSize(new Dimension(sma.getEnvironnement().getWidth() * 11, sma.getEnvironnement().getHeight() * 11));
-		grid = new Grid(sma.getEnvironnement().getWidth() * 10,sma.getEnvironnement().getHeight() * 10);
+		frame.setPreferredSize(new Dimension(sma.getEnvironnement().getWidth() * 5 + 30, sma.getEnvironnement().getHeight() * 5 + 30));
+		grid = new Grid(sma.getEnvironnement().getWidth() * 5,sma.getEnvironnement().getHeight() * 5);
 		frame.add(grid);
 		frame.setVisible(true);
-		
+		//List<Agent> list = new ArrayList<Agent>(sma.getAgents());
 		for(int i = 0 ; i < sma.getAgents().size() ; i++){
 			Agent a = sma.getAgents().get(i);
 			grid.fillCell(a.getPositionX(),a.getPositionY(),a.getColor());
@@ -48,17 +48,19 @@ public class View implements Observer {
 	}
 	
 	public void launch() throws InterruptedException{
-		sma.run(100000);
+		sma.run(1000000);
 	}
 
 	public void update(Observable o, Object arg) {
 		grid.clean();
 		for(int i = 0 ; i < sma.getAgents().size() ; i++){
 			Agent a = sma.getAgents().get(i);
+			//System.out.println(a.getPositionX() + " " + a.getPositionY() + " " + a.getColor());
 			grid.fillCell(a.getPositionX(),a.getPositionY(),a.getColor());
 		}
-		grid.repaint();
-		frame.add(grid);
+		sma.nbTypeOfAgent();
+		grid.repaint();		
+		//frame.add(grid);
 	}
 
 	public static class Grid extends JPanel {
@@ -79,16 +81,17 @@ public class View implements Observer {
 			super.paintComponent(g);
 			for (int i = 0 ; i < fillCells.size() ; i++) {
 				Point fillCell = fillCells.get(i);
+				//System.out.println(fillCell);
 				Color c = mapColors.get(fillCell);
-				int cellX = 10 + (fillCell.x * 10);
-				int cellY = 10 + (fillCell.y * 10);
+				int cellX = 5 + (fillCell.x * 5);
+				int cellY = 5 + (fillCell.y * 5);
 				//Random r = new Random();
 				//Color couleur = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
 				g.setColor(c);
-				g.fillOval(cellX, cellY, 10, 10);
+				g.fillOval(cellX, cellY, 5, 5);
 			}
 			g.setColor(Color.BLACK);
-			g.drawRect(10, 10, width, height);
+			g.drawRect(5, 5, width, height);
 
 			for (int i = 10; i <= width; i += 10) {
 				//g.drawLine(i, 10, i, height + 10);
@@ -100,7 +103,7 @@ public class View implements Observer {
 		}
 		
 		public void clean(){
-			fillCells.clear();
+			fillCells = new ArrayList<Point>();
 			//repaint();
 		}
 		

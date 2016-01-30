@@ -5,48 +5,31 @@ import java.util.List;
 import java.util.Random;
 
 import MultiAgentsParticules.bille.Bille;
+import MultiAgentsParticules.wator.Fish;
+import MultiAgentsParticules.wator.Shark;
 
 public class Environnement {
 
-	private boolean[][] espace;
+	private Agent[][] espace;
 	private int height;
 	private int width;
 	// all agents
-	private List<Agent> agents;
-	// all positions
-	private List<String> positionsOfAgents = new LinkedList<String>();
 	
 	public Environnement(int width, int height){
-		agents = new LinkedList<Agent>();
 		this.height = height;
 		this.width = width;
-		this.espace = new boolean[width][height];
+		this.espace = new Agent[width][height];
 	}
 	
-	public Environnement(){
-		agents = new LinkedList<Agent>();
-	}
 		
-	public void init(int nbAgents){
-		Agent tmp;
-		Random r = new Random();
-		int posX;
-		int posY;
-		this.espace = new boolean[width][height];
-		for(int i = 0 ; i < nbAgents ; i++){
-			posX = r.nextInt(width);
-			posY = r.nextInt(height);
-			while(this.espace[posX][posY]){
-				posX = r.nextInt(width);
-				posY = r.nextInt(height);
-			}
-			tmp = new Bille(posX,posY);
-			this.espace[posX][posY] = true;
-			tmp.setId(agents.size());
-			agents.add(tmp);
-		}
+	public Environnement() {
 	}
 
+	public void init(int width, int height) {
+		this.espace = new Agent[width][height];	
+		this.setHeight(height);
+		this.setWidth(width);
+	}
 	public int getHeight() {
 		return height;
 	}
@@ -63,15 +46,8 @@ public class Environnement {
 		this.width = width;
 	}
 	
-	public void setAgents(List<Agent> agents){
-		 this.agents = agents;
-	}
-	
-	public boolean[][] getEspace(){
+	public Agent[][] getEspace(){
 		return this.espace;
 	}
 	
-	public boolean isTaken(int width, int height){
-		return this.espace[width][height];
-	}
 }

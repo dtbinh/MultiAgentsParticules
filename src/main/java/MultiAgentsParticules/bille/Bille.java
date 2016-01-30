@@ -1,21 +1,19 @@
 package MultiAgentsParticules.bille;
 
 import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.Direction;
+import MultiAgentsParticules.DirectionEnum;
+import MultiAgentsParticules.TypeOfAgentEnum;
 
 public class Bille extends Agent {
 
 	public Bille(int positionX, int positionY) {
 		super(positionX, positionY);
+		this.setColor(generateColor());
+		this.setType(TypeOfAgentEnum.BILLE);
 	}
 
-	public boolean isTaken(int width, int height){
-		return this.environnement.getEspace()[width][height];
-	}
- 
-	
 	public void doIt() {
-		if (initialisation || direction == Direction.NONE) {
+		if (initialisation || direction == DirectionEnum.NONE) {
 			// au depart, on choisit une direction pour l'agent
 			this.direction = generateInitDirection();
 			initialisation = false;
@@ -24,161 +22,161 @@ public class Bille extends Agent {
 		//System.out.println(this);
 
 		// NORTH
-		if (direction == Direction.NORTH) {
+		if (direction == DirectionEnum.NORTH) {
 			// verification de case vide + verification si on est sur le bord
 			if ((environnement.getHeight() == (positionY + 1))
-					|| (environnement.getEspace()[positionX][positionY + 1])) {
+					|| (environnement.getEspace()[positionX][positionY + 1] != null)) {
 				if((positionY) > 0 && !isTaken(positionX,positionY - 1))
-					direction = Direction.SOUTH;
+					direction = DirectionEnum.SOUTH;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 			}
 		}
 
 		// NORTH_EAST
-		else if (direction == Direction.NORTH_EAST) {
+		else if (direction == DirectionEnum.NORTH_EAST) {
 
 			// verification de case vide
 			if ((positionX + 1 < environnement.getWidth()) && (positionY + 1 < environnement.getHeight())
-					&& (environnement.getEspace()[positionX + 1][positionY + 1])) {
+					&& (environnement.getEspace()[positionX + 1][positionY + 1] != null)) {
 				if((positionX) > 0 && (positionY + 1) < environnement.getHeight() && !isTaken(positionX - 1,positionY + 1))
-					direction = Direction.NORTH_WEST;
+					direction = DirectionEnum.NORTH_WEST;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 				
 			} else {
 				// si on tape sur le coté droit
 				if ((environnement.getWidth() == (positionX + 1)) && (environnement.getHeight() != (positionY + 1))) {
-					direction = Direction.NORTH_WEST;
+					direction = DirectionEnum.NORTH_WEST;
 				}
 
 				// si on tape sur le haut
 				if ((environnement.getHeight() == (positionY + 1)) && (environnement.getWidth() != (positionX + 1))) {
-					direction = Direction.SOUTH_EAST;
+					direction = DirectionEnum.SOUTH_EAST;
 				}
 
 				// si on tape le coin haut droit
 				if ((environnement.getWidth() == (positionX + 1)) && (environnement.getHeight() == (positionY + 1))) {
-					direction = Direction.SOUTH_WEST;
+					direction = DirectionEnum.SOUTH_WEST;
 				}
 			}
 		}
 
 		// EAST
-		else if (direction == Direction.EAST) {
+		else if (direction == DirectionEnum.EAST) {
 			// verification de case vide + verification si on est sur le bord
 			if (((positionX + 1) == environnement.getWidth())
-					|| (environnement.getEspace()[positionX + 1][positionY])) {
+					|| (environnement.getEspace()[positionX + 1][positionY] != null)) {
 				if((positionX) > 0 && !isTaken(positionX - 1, positionY))
-					direction = Direction.WEST;
+					direction = DirectionEnum.WEST;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 			}
 		}
 
 		// SOUTH_EAST
-		else if (direction == Direction.SOUTH_EAST) {
+		else if (direction == DirectionEnum.SOUTH_EAST) {
 
 			// verification de case vide
 			if ((positionY > 0) && ((positionX + 1) < environnement.getWidth())
-					&& (environnement.getEspace()[positionX + 1][positionY - 1])) {
+					&& (environnement.getEspace()[positionX + 1][positionY - 1] != null)) {
 				if((positionX + 1) < environnement.getWidth() && (positionY) > 0 && !isTaken(positionX + 1,positionY - 1))
-					direction = Direction.NORTH_WEST;
+					direction = DirectionEnum.NORTH_WEST;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 			} else {
 				// si on tape sur le coté droit
 				if ((environnement.getWidth() == (positionX + 1)) && (positionY != 0)) {
-					direction = Direction.SOUTH_WEST;
+					direction = DirectionEnum.SOUTH_WEST;
 				}
 				// si on tape sur le bas
 				if ((positionY == 0) && (environnement.getWidth() != (positionX + 1))) {
-					direction = Direction.NORTH_EAST;
+					direction = DirectionEnum.NORTH_EAST;
 				}
 				// si on tape le coin du bas droite
 				if ((environnement.getWidth() == (positionX + 1)) && (positionY == 0)) {
-					direction = Direction.NORTH_WEST;
+					direction = DirectionEnum.NORTH_WEST;
 				}
 			}
 		}
 
 		// SOUTH
-		else if (direction == Direction.SOUTH) {
+		else if (direction == DirectionEnum.SOUTH) {
 			// verification de case vide + verification si on est sur le bord
-			if ((positionY == 0) || (environnement.getEspace()[positionX][positionY - 1])) {
+			if ((positionY == 0) || (environnement.getEspace()[positionX][positionY - 1] != null)) {
 				if((positionY + 1) < environnement.getHeight() && !isTaken(positionX, positionY + 1))
-					direction = Direction.NORTH;
+					direction = DirectionEnum.NORTH;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 			}
 		}
 
 		// SOUTH_WEST
-		else if (direction == Direction.SOUTH_WEST) {
+		else if (direction == DirectionEnum.SOUTH_WEST) {
 			// verification de case vide
-			if ((positionX > 0) && (positionY > 0) && (environnement.getEspace()[positionX - 1][positionY - 1])) {
+			if ((positionX > 0) && (positionY > 0) && (environnement.getEspace()[positionX - 1][positionY - 1] != null)) {
 				if((positionX + 1) < environnement.getWidth() && (positionY + 1) < environnement.getHeight() && !isTaken(positionX + 1, positionY + 1))
-					direction = Direction.NORTH_EAST;
+					direction = DirectionEnum.NORTH_EAST;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 			} else {
 				// si on tape dans le coté gauche
 				if ((positionX == 0) && (positionY != 0)) {
-					direction = Direction.SOUTH_EAST;
+					direction = DirectionEnum.SOUTH_EAST;
 				}
 				// si on tape sur le bas
 				if ((positionY == 0) && (positionX != 0)) {
-					direction = Direction.NORTH_WEST;
+					direction = DirectionEnum.NORTH_WEST;
 				}
 				// si on tape dans le coin bas gauche
 				if ((positionX == 0) && (positionY == 0)) {
-					direction = Direction.NORTH_EAST;
+					direction = DirectionEnum.NORTH_EAST;
 				}
 			}
 		}
 
 		// WEST
-		else if (direction == Direction.WEST) {
+		else if (direction == DirectionEnum.WEST) {
 			// verification de case vide + verification si on est sur le bord
-			if ((positionX == 0) || (environnement.getEspace()[positionX - 1][positionY])) {
+			if ((positionX == 0) || (environnement.getEspace()[positionX - 1][positionY] != null)) {
 				if((positionX + 1) < environnement.getWidth() && !isTaken(positionX + 1, positionY))
-					direction = Direction.EAST;
+					direction = DirectionEnum.EAST;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 			}
 		}
 
 		// NORTH_WEST
-		else if (direction == Direction.NORTH_WEST) {
+		else if (direction == DirectionEnum.NORTH_WEST) {
 
 			// verification de case vide
 			if ((positionX > 0) && ((positionY + 1) < environnement.getHeight())
-					&& (environnement.getEspace()[positionX - 1][positionY + 1])) {
+					&& (environnement.getEspace()[positionX - 1][positionY + 1] != null)) {
 				if((positionY + 1) < environnement.getHeight() && (positionX) > 0 && !isTaken(positionX - 1, positionY + 1))
-					direction = Direction.SOUTH_EAST;
+					direction = DirectionEnum.SOUTH_EAST;
 				else
-					direction = Direction.NONE;
+					direction = DirectionEnum.NONE;
 
 			} else {
 				// si on tape sur le coté gauche
 				if ((positionX == 0) && (environnement.getHeight() != (positionY + 1))) {
-					direction = Direction.NORTH_EAST;
+					direction = DirectionEnum.NORTH_EAST;
 				}
 				// si on tape sur le haut
 				if ((positionX != 0) && (environnement.getHeight() == (positionY + 1))) {
-					direction = Direction.SOUTH_WEST;
+					direction = DirectionEnum.SOUTH_WEST;
 				}
 				// si on tape dans le coin haut gauche
 				if ((positionX == 0) && (environnement.getHeight() == (positionY + 1))) {
-					direction = Direction.SOUTH_EAST;
+					direction = DirectionEnum.SOUTH_EAST;
 				}
 			}
 		}
 		// on met la case en non occupée
-		environnement.getEspace()[positionX][positionY] = false;
+		environnement.getEspace()[positionX][positionY] = null;
 		//System.out.println(direction);
 		deplacement(direction);
 		//System.out.println(this);
-		environnement.getEspace()[positionX][positionY] = true;
+		environnement.getEspace()[positionX][positionY] = this;
 	}
 }
