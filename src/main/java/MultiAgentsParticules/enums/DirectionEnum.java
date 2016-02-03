@@ -1,4 +1,4 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.enums;
 
 public enum DirectionEnum {
 

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.DirectionEnum;
 import MultiAgentsParticules.SMA;
-import MultiAgentsParticules.TypeOfAgentEnum;
+import MultiAgentsParticules.enums.DirectionEnum;
+import MultiAgentsParticules.enums.TypeOfAgentEnum;
 
 public class Fish extends Agent {
 

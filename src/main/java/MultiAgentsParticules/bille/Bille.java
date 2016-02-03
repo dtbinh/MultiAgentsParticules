@@ -3,8 +3,8 @@ package MultiAgentsParticules.bille;
 import java.util.Random;
 
 import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.DirectionEnum;
-import MultiAgentsParticules.TypeOfAgentEnum;
+import MultiAgentsParticules.enums.DirectionEnum;
+import MultiAgentsParticules.enums.TypeOfAgentEnum;
 
 public class Bille extends Agent {
 	
@@ -172,7 +172,7 @@ public class Bille extends Agent {
 					}
 					// si on tape le coin du bas droite
 					if ((environnement.getWidth() == (positionX + 1)) && (positionY == 0)) {
-						if (!isTaken(positionX - 1, positionY - 1))
+						if (!isTaken(positionX - 1, positionY + 1))
 							direction = DirectionEnum.NORTH_WEST;
 						else
 							direction = DirectionEnum.NONE;
@@ -327,7 +327,7 @@ public class Bille extends Agent {
 					}
 					// si on tape dans le coin haut gauche
 					if ((positionX == 0) && (environnement.getHeight() == (positionY + 1))) {
-						if (!isTaken(positionX - 1, positionY - 1))
+						if (!isTaken(positionX + 1, positionY - 1))
 							direction = DirectionEnum.SOUTH_EAST;
 						else
 							direction = DirectionEnum.NONE;

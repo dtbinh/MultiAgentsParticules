@@ -14,12 +14,16 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import MultiAgentsParticules.launcher.Main;
+
 public class View implements Observer {
 
 	private SMA sma;
 	private Grid grid;
 	private JFrame frame;
-	
+	private static boolean torique;
+	private static int speed;
+	private static int sizeAgent;
 	/* TODO
 	 * Rendre paramétrable dans la vue :
 	 * - hauteur, largeur
@@ -29,11 +33,14 @@ public class View implements Observer {
 	 * - durée de l'exécution
 	 */
 	
-	public View(SMA sma) throws InterruptedException {
-		this.sma = sma;
+	public View(boolean torique, int speed, int sizeAgent) throws InterruptedException {
+		this.sma = Main.getSma();
+		this.torique = torique;
+		this.speed = speed;
+		this.sizeAgent = sizeAgent;
 		frame = new JFrame();
-		frame.setPreferredSize(new Dimension(sma.getEnvironnement().getWidth() * 5 + 30, sma.getEnvironnement().getHeight() * 5 + 30));
-		grid = new Grid(sma.getEnvironnement().getWidth() * 5,sma.getEnvironnement().getHeight() * 5);
+		frame.setPreferredSize(new Dimension(sma.getEnvironnement().getWidth() * sizeAgent + 30, sma.getEnvironnement().getHeight() * sizeAgent + 30));
+		grid = new Grid(sma.getEnvironnement().getWidth() * sizeAgent ,sma.getEnvironnement().getHeight() * sizeAgent);
 		frame.add(grid);
 		frame.setVisible(true);
 		//List<Agent> list = new ArrayList<Agent>(sma.getAgents());
@@ -47,8 +54,10 @@ public class View implements Observer {
 		frame.setVisible(true);
 	}
 	
+	
+	
 	public void launch() throws InterruptedException{
-		sma.run(true);
+		sma.run(torique,speed);
 	}
 
 	public void update(Observable o, Object arg) {
@@ -83,22 +92,22 @@ public class View implements Observer {
 				Point fillCell = fillCells.get(i);
 				//System.out.println(fillCell);
 				Color c = mapColors.get(fillCell);
-				int cellX = 5 + (fillCell.x * 5);
-				int cellY = 5 + (fillCell.y * 5);
+				int cellX = 5 + (fillCell.x * sizeAgent);
+				int cellY = 5 + (fillCell.y * sizeAgent);
 				//Random r = new Random();
 				//Color couleur = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
 				g.setColor(c);
-				g.fillOval(cellX, cellY, 5, 5);
+				g.fillOval(cellX, cellY, sizeAgent, sizeAgent);
 			}
 			g.setColor(Color.BLACK);
 			g.drawRect(5, 5, width, height);
 
 			for (int i = 10; i <= width; i += 10) {
-				g.drawLine(i, 10, i, height + 10);
+				//g.drawLine(i, 10, i, height + 10);
 			}
 
 			for (int i = 10; i <= height; i += 10) {
-				g.drawLine(10, i, width + 10, i);
+				//g.drawLine(10, i, width + 10, i);
 			}
 		}
 		

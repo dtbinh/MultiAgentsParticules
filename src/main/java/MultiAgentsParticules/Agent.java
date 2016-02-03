@@ -1,13 +1,12 @@
 package MultiAgentsParticules;
 
 import java.awt.Color;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import MultiAgentsParticules.bille.Bille;
-import MultiAgentsParticules.wator.Fish;
-import MultiAgentsParticules.wator.Shark;
+import MultiAgentsParticules.enums.DirectionEnum;
+import MultiAgentsParticules.enums.TypeOfAgentEnum;
 
 public abstract class Agent {
 
@@ -180,7 +179,7 @@ public abstract class Agent {
 	}
 	
 	public boolean isTaken(int width, int height) {
-		return this.environnement.getEspace()[width][height] != null;
+		return (this.environnement.getEspace()[width][height] != null && this.environnement.getEspace()[width][height].getType() != TypeOfAgentEnum.EMPTY);
 	}
 
 	public TypeOfAgentEnum getType() {
@@ -205,5 +204,9 @@ public abstract class Agent {
 	
 	public int getB(){
 		return b;
+	}
+	
+	public void setDirection(DirectionEnum direction){
+		this.direction = direction;
 	}
 }
