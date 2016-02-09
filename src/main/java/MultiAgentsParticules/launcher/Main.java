@@ -22,8 +22,7 @@ public class Main {
 		String project = "hunt";
 		int width = 600;
 		int height = 600;
-		int speed = 100; // 100 ms between every foreach where is executed doIt
-							// method
+		int speed = 100; // 100 ms between every foreach where is executed doIt method
 		int sizeAgent = 10;
 		boolean torique = false;
 
@@ -133,7 +132,7 @@ public class Main {
 					nbParticles = Integer.parseInt(cmd.getOptionValue("nb"));
 				}
 				setSma(new SMA());
-				getSma().initBille(nbParticles, width / sizeAgent, height / sizeAgent);
+				getSma().initBille(nbParticles, width , height);
 				ViewJFX vfx = new ViewJFX();
 				vfx.init(torique, speed, sizeAgent);
 				getSma().addObserver(vfx);

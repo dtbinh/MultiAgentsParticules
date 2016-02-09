@@ -34,7 +34,6 @@ public class ViewJFX extends Application implements Observer {
 	private static int speed;
 	private static int sizeAgent;
 
-	
 	public ViewJFX() {
 		sma = Main.getSma();
 		sma.addObserver(this);
@@ -42,8 +41,8 @@ public class ViewJFX extends Application implements Observer {
 		scene = new Scene(canvas, sma.getEnvironnement().getWidth(), sma.getEnvironnement().getHeight(), Color.WHITE);
 
 	}
-	
-	public void init(boolean torique, int speed, int sizeAgent){
+
+	public void init(boolean torique, int speed, int sizeAgent) {
 		this.torique = torique;
 		this.speed = speed;
 		this.sizeAgent = sizeAgent;
@@ -69,7 +68,7 @@ public class ViewJFX extends Application implements Observer {
 			MapAgent.mapAgent.put(a, point);
 			circle.add(point);
 		}
-		
+
 		lstCircle.addAll(circle);
 		canvas.getChildren().addAll(lstCircle);
 		primaryStage.show();
@@ -101,25 +100,21 @@ public class ViewJFX extends Application implements Observer {
 		// MapAgent.mapAgent.get(sma.getAgents().get(i)).relocate(sma.getAgents().get(i).getPositionX(),
 		// sma.getAgents().get(i).getPositionY());
 		// }
-		/*
-		 * for(Agent a : sma.getAgents()){
-		 * MapAgent.mapAgent.get(a).relocate(a.getPositionX(),
-		 * a.getPositionY()); }
-		 */
 
 		for (Agent a : sma.getAgents()) {
-			if (null == MapAgent.mapAgent.get(a)) {
-				Circle point = new Circle();
-				point.setCenterX(a.getPositionX());
-				point.setCenterY(a.getPositionY());
-				point.setRadius(sizeAgent / 2);
-				point.setFill(Color.rgb(a.getR(), a.getG(), a.getB()));
-				MapAgent.mapAgent.put(a, point);
-				circle.add(point);
-			} else {
-				MapAgent.mapAgent.get(a).relocate(a.getPositionX(),a.getPositionY());
-			}
+			MapAgent.mapAgent.get(a).relocate(a.getPositionX(), a.getPositionY());
 		}
+
+		/*
+		 * for (Agent a : sma.getAgents()) { if (null ==
+		 * MapAgent.mapAgent.get(a)) { Circle point = new Circle();
+		 * point.setCenterX(a.getPositionX());
+		 * point.setCenterY(a.getPositionY()); point.setRadius(sizeAgent / 2);
+		 * point.setFill(Color.rgb(a.getR(), a.getG(), a.getB()));
+		 * MapAgent.mapAgent.put(a, point); circle.add(point); } else {
+		 * MapAgent.mapAgent.get(a).relocate(a.getPositionX(),a.getPositionY());
+		 * } }
+		 */
 
 	}
 
