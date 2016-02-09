@@ -1,9 +1,14 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.wator.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,16 +19,24 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.SMA;
+import MultiAgentsParticules.hotPursuit.model.GameOverExcception;
 import MultiAgentsParticules.launcher.Main;
 
 public class View implements Observer {
-
+	
+	private final static String fileName = "stats.csv";
+	private BufferedWriter writer;
+	public PrintWriter out;
 	private SMA sma;
 	private Grid grid;
 	private JFrame frame;
 	private static boolean torique;
 	private static int speed;
 	private static int sizeAgent;
+	public File png, csv;
+	
 	/* TODO
 	 * Rendre paramétrable dans la vue :
 	 * - hauteur, largeur
@@ -33,7 +46,7 @@ public class View implements Observer {
 	 * - durée de l'exécution
 	 */
 	
-	public View(boolean torique, int speed, int sizeAgent) throws InterruptedException {
+	public View(boolean torique, int speed, int sizeAgent) throws InterruptedException, IOException {
 		this.sma = Main.getSma();
 		this.torique = torique;
 		this.speed = speed;
@@ -48,7 +61,17 @@ public class View implements Observer {
 			Agent a = sma.getAgents().get(i);
 			grid.fillCell(a.getPositionX(),a.getPositionY(),a.getColor());
 		}
-		
+		System.out.println("create file writer");
+		png = new File("stats.png");
+		if(png.exists())
+			png.delete();
+		csv = new File("stats.csv");
+
+		if(csv.exists())
+			csv.delete();
+
+		out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+		out.println("fish, shark");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
@@ -56,7 +79,7 @@ public class View implements Observer {
 	
 	
 	
-	public void launch() throws InterruptedException{
+	public void launch() throws InterruptedException, GameOverExcception{
 		sma.run(torique,speed);
 	}
 
@@ -68,7 +91,20 @@ public class View implements Observer {
 			grid.fillCell(a.getPositionX(),a.getPositionY(),a.getColor());
 		}
 		sma.nbTypeOfAgent();
-		grid.repaint();		
+		grid.repaint();	
+		String stats = (sma.getNbFish())+", "+sma.getNbShark();
+		if(sma.getCurrentTurn()%100 == 0){
+			try {
+				//System.out.println("close and re-open");
+				out.close();
+				out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		out.println(stats);
+		
 		//frame.add(grid);
 	}
 

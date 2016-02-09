@@ -1,22 +1,30 @@
-package MultiAgentsParticules.hotPursuit;
+package MultiAgentsParticules.hotPursuit.model;
 
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
 
-import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.Empty;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
 
 public class Hunter extends Agent {
-
-	public Hunter(int positionX, int positionY) {
-		super(positionX, positionY);
+	
+	private int cmptRoundForSpeak; 
+	
+	public Hunter(int positionX, int positionY, int roundForSpeak) {
+		super(positionX, positionY, roundForSpeak);
 		this.setType(TypeOfAgentEnum.HUNTER);
 		setColor(Color.RED);
+		cmptRoundForSpeak = roundForSpeak;
 	}
 
-	public void doIt(boolean torique) {
+	public void doIt(boolean torique) throws GameOverExcception {
+		if(cmptRoundForSpeak != 1 && cmptRoundForSpeak > 0){
+			cmptRoundForSpeak --;
+			return;
+		}
+		cmptRoundForSpeak = roundForSpeak;
+		
 		List<Agent> neighbors = environnement.getNeighbors(positionX, positionY);
 		Iterator<Agent> it = neighbors.iterator();
 		int[][] matrice = environnement.matriceDijkstra;
@@ -34,7 +42,8 @@ public class Hunter extends Agent {
 		}
 		
 		if(isTaken(positionX,positionY) && environnement.getEspace()[positionX][positionY].getType() == TypeOfAgentEnum.CHASED){
-			System.exit(0);
+			//System.exit(0);
+			new GameOverExcception();
 		}
 		environnement.getEspace()[positionX][positionY] = this;
 	}

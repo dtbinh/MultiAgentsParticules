@@ -1,21 +1,24 @@
 package MultiAgentsParticules.launcher;
 
+import java.io.IOException;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import MultiAgentsParticules.SMA;
-import MultiAgentsParticules.View;
-import MultiAgentsParticules.ViewJFX;
-import MultiAgentsParticules.ViewPursuit;
+import MultiAgentsParticules.bille.view.ViewJFX;
+import MultiAgentsParticules.core.SMA;
+import MultiAgentsParticules.hotPursuit.model.GameOverExcception;
+import MultiAgentsParticules.hotPursuit.view.ViewPursuit;
+import MultiAgentsParticules.wator.view.View;
 
 public class Main {
 
 	private static SMA sma;
 
-	public static void main(String[] args) throws InterruptedException, ParseException {
+	public static void main(String[] args) throws InterruptedException, ParseException, GameOverExcception, IOException {
 		String project = "hunt";
 		int width = 600;
 		int height = 600;
@@ -41,11 +44,15 @@ public class Main {
 		options.addOption("repF", "nbCycleRepFish", true, "number of cycle before reproduction for fish");
 		options.addOption("repS", "nbCycleRepShark", true, "number of cycle before reproduction for shark");
 		options.addOption("death", "nbCycleDeathShark", true, "number of cycle before death of shark");
-
+		options.addOption("speakFish", "speakFish", true, "number of round to speak for fish(s)");
+		options.addOption("speakShark", "speakShark", true, "number of round to speak for the shark(s)");
+		
 		// Hunt
 		options.addOption("nbH", "nbHunters", true, "number of hunters");
 		options.addOption("nbW", "nbWalls", true, "number of walls");
-
+		options.addOption("speakHunter", "speakHunter", true, "number of round to speak for hunter(s)");
+		options.addOption("speakHunted", "speakHunted", true, "number of round to speak for the hunted");
+		
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = parser.parse(options, args);
 
@@ -80,8 +87,9 @@ public class Main {
 				int nbFish = 1000;
 				int nbShark = 10;
 				int nbCycleRepFish = 2;
-				int nbCycleRepShark = 2;
-				int nbCycleDeathShark = 3;
+				int nbCycleRepShark = 4;
+				int nbCycleDeathShark = 5;
+				int roundForSpeakFish = 1,roundForSpeakShark = 1;
 
 				if (cmd.getOptionValue("nbF") != null) {
 					nbFish = Integer.parseInt(cmd.getOptionValue("nbF"));
@@ -98,11 +106,18 @@ public class Main {
 				if (cmd.getOptionValue("death") != null) {
 					nbCycleDeathShark = Integer.parseInt(cmd.getOptionValue("death"));
 				}
+				if (cmd.getOptionValue("speakFish") != null) {
+					roundForSpeakFish = Integer.parseInt(cmd.getOptionValue("speakFish"));
+				}
+				if (cmd.getOptionValue("speakShark") != null) {
+					roundForSpeakShark = Integer.parseInt(cmd.getOptionValue("speakShark"));
+				}
 				setSma(new SMA());
-				sma.initFishShark(nbFish, nbShark, width / sizeAgent, height / sizeAgent);
+				sma.initFishShark(nbFish, nbShark, nbCycleRepFish, nbCycleRepShark, nbCycleDeathShark, roundForSpeakFish, roundForSpeakShark, width / sizeAgent, height / sizeAgent);
 				View v = new View(torique, speed, sizeAgent);
 				sma.addObserver(v);
 				v.launch();
+				v.out.close();
 				/*
 				 * ViewJFX vfx = new ViewJFX();
 				 * vfx.init(torique,speed,sizeAgent); getSma().addObserver(vfx);
@@ -127,19 +142,26 @@ public class Main {
 				/*
 				 * HAUNTER VS CHASED - hauteur, largeur - taille des agents -
 				 * vitesse - nombre de chasseur - nombre de murs - torique
+				 * Rapport de vitesse entre les agents
 				 */
 				int nbHunters = 1;
 				int nbWalls = 0;
 				torique = true;
-				
+				int roundForSpeakHunter = 1,roundForSpeakHunted = 1;
 				if (cmd.getOptionValue("nbH") != null) {
 					nbHunters = Integer.parseInt(cmd.getOptionValue("nbH"));
 				}
 				if (cmd.getOptionValue("nbW") != null) {
 					nbWalls = Integer.parseInt(cmd.getOptionValue("nbW"));
 				}
+				if (cmd.getOptionValue("speakHunted") != null) {
+					roundForSpeakHunted = Integer.parseInt(cmd.getOptionValue("speakHunted"));
+				}
+				if (cmd.getOptionValue("speakHunter") != null) {
+					roundForSpeakHunter = Integer.parseInt(cmd.getOptionValue("speakHunter"));
+				}
 				setSma(new SMA());
-				sma.initPursuit(nbHunters, nbWalls, width / sizeAgent, height / sizeAgent);
+				sma.initPursuit(nbHunters, nbWalls, roundForSpeakHunter ,roundForSpeakHunted ,width / sizeAgent, height / sizeAgent);
 				ViewPursuit v = new ViewPursuit(torique, speed, sizeAgent);
 				sma.addObserver(v);
 				v.launch();
@@ -148,15 +170,22 @@ public class Main {
 			int nbHunters = 1;
 			int nbWalls = 0;
 			torique = true;
-			
+			int roundForSpeakHunter = 1 ,roundForSpeakHunted = 1;
+
 			if (cmd.getOptionValue("nbH") != null) {
 				nbHunters = Integer.parseInt(cmd.getOptionValue("nbH"));
 			}
 			if (cmd.getOptionValue("nbW") != null) {
 				nbWalls = Integer.parseInt(cmd.getOptionValue("nbW"));
 			}
+			if (cmd.getOptionValue("speakHunted") != null) {
+				roundForSpeakHunted = Integer.parseInt(cmd.getOptionValue("speakHunted"));
+			}
+			if (cmd.getOptionValue("speakHunter") != null) {
+				roundForSpeakHunter = Integer.parseInt(cmd.getOptionValue("speakHunter"));
+			}
 			setSma(new SMA());
-			sma.initPursuit(nbHunters, nbWalls, width / sizeAgent, height / sizeAgent);
+			sma.initPursuit(nbHunters, nbWalls, roundForSpeakHunter ,roundForSpeakHunted , width / sizeAgent, height / sizeAgent);
 			ViewPursuit v = new ViewPursuit(torique, speed, sizeAgent);
 			sma.addObserver(v);
 			v.launch();

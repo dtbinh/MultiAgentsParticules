@@ -1,4 +1,4 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.hotPursuit.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,8 +16,11 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import MultiAgentsParticules.enums.DirectionEnum;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.SMA;
+import MultiAgentsParticules.core.enums.DirectionEnum;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.hotPursuit.model.GameOverExcception;
 import MultiAgentsParticules.launcher.Main;
 
 public class ViewPursuit implements KeyListener, Observer {
@@ -63,7 +66,7 @@ public class ViewPursuit implements KeyListener, Observer {
 		frame.setVisible(true);
 	}
 
-	public void launch() throws InterruptedException {
+	public void launch() throws InterruptedException, GameOverExcception {
 		sma.run(torique, speed);
 	}
 
@@ -137,9 +140,10 @@ public class ViewPursuit implements KeyListener, Observer {
 	}
 
 	public void keyPressed(KeyEvent e) {
+		//System.out.println(e.getKeyCode());
 		/*
 		 * U I O
-		 * J   L
+		 * J K L
 		 * , ; :
 		 */
 		// i
@@ -173,6 +177,10 @@ public class ViewPursuit implements KeyListener, Observer {
 		// o
 		if (e.getKeyCode() == 79) {
 			agentChased.setDirection(DirectionEnum.SOUTH_EAST);
+		}
+		// o
+		if (e.getKeyCode() == 75) {
+			agentChased.setDirection(DirectionEnum.NONE);
 		}
 	}
 

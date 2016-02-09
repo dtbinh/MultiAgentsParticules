@@ -1,15 +1,15 @@
-package MultiAgentsParticules.bille;
+package MultiAgentsParticules.bille.model;
 
 import java.util.Random;
 
-import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.enums.DirectionEnum;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.enums.DirectionEnum;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
 
 public class Bille extends Agent {
 	
-	public Bille(int positionX, int positionY) {
-		super(positionX, positionY);
+	public Bille(int positionX, int positionY, int roundForSpeak) {
+		super(positionX, positionY, roundForSpeak);
 		generateColor();
 		this.setType(TypeOfAgentEnum.BILLE);
 	}

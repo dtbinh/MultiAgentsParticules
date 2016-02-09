@@ -1,21 +1,23 @@
-package MultiAgentsParticules.hotPursuit;
+package MultiAgentsParticules.hotPursuit.model;
 
 import java.awt.Color;
 
-import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.Empty;
-import MultiAgentsParticules.enums.DirectionEnum;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.enums.DirectionEnum;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
 
 public class Hunted extends Agent {
 
 	private boolean initialisation = true;
-
-	public Hunted(int positionX, int positionY) {
-		super(positionX, positionY);
+	
+	private int cmptRoundForSpeak;
+	
+	public Hunted(int positionX, int positionY, int roundForSpeakHunted) {
+		super(positionX, positionY, roundForSpeakHunted);
 		setColor(Color.green);
 		this.setType(TypeOfAgentEnum.CHASED);
 		direction = DirectionEnum.NONE;
+		cmptRoundForSpeak = roundForSpeakHunted;
 	}
 
 	/**
@@ -23,6 +25,12 @@ public class Hunted extends Agent {
 	 * changeant la valeur de direction
 	 */
 	public void doIt(boolean torique) {
+		if(cmptRoundForSpeak != 1 && cmptRoundForSpeak > 0){
+			cmptRoundForSpeak --;
+			return;
+		}
+		cmptRoundForSpeak = roundForSpeak;
+		
 		if (initialisation) {
 			this.direction = generateInitDirection();
 			initialisation = false;

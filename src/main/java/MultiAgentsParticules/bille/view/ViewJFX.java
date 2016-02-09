@@ -1,10 +1,13 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.bille.view;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.SMA;
+import MultiAgentsParticules.hotPursuit.model.GameOverExcception;
 import MultiAgentsParticules.launcher.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -78,7 +81,7 @@ public class ViewJFX extends Application implements Observer {
 			public void handle(final ActionEvent t) {
 				try {
 					sma.runJFX(torique, speed);
-				} catch (InterruptedException e) {
+				} catch (InterruptedException | GameOverExcception e) {
 					e.printStackTrace();
 				}
 			}

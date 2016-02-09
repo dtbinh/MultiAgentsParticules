@@ -1,14 +1,14 @@
-package MultiAgentsParticules.wator;
+package MultiAgentsParticules.wator.model;
 
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.SMA;
-import MultiAgentsParticules.enums.DirectionEnum;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.SMA;
+import MultiAgentsParticules.core.enums.DirectionEnum;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
 
 public class Shark extends Agent {
 	private List<DirectionEnum> toBeEaten;
@@ -21,8 +21,8 @@ public class Shark extends Agent {
 	private static final int nbShark = 0;
 	private static final int starv = 0;
 	
-	public Shark(int positionX, int positionY, int nbCycleReproduction, int nbCycleDeath) {
-		super(positionX, positionY);
+	public Shark(int positionX, int positionY, int nbCycleReproduction, int nbCycleDeath, int roundForSpeak) {
+		super(positionX, positionY, roundForSpeak);
 		this.setColor(Color.BLACK);
 		r = Color.BLACK.getRed();
 		g = Color.BLACK.getGreen();
@@ -72,7 +72,7 @@ public class Shark extends Agent {
 				// compteur et on le remet à 0
 				if (compteurReproduction >= nbCycleReproduction) {
 					compteurReproduction = 0;
-					Agent baby = new Shark(positionX, positionY, nbCycleReproduction, nbCycleDeath);
+					Agent baby = new Shark(positionX, positionY, nbCycleReproduction, nbCycleDeath,roundForSpeak);
 					environnement.getEspace()[positionX][positionY] = baby;
 					SMA.getAgents().add(baby);
 					// on se déplace en mangeant le poisson
@@ -105,7 +105,7 @@ public class Shark extends Agent {
 				// on libere la case
 				if (compteurReproduction >= nbCycleReproduction) {
 					compteurReproduction = 0;
-					Agent baby = new Shark(positionX, positionY, nbCycleReproduction, nbCycleDeath);
+					Agent baby = new Shark(positionX, positionY, nbCycleReproduction, nbCycleDeath,roundForSpeak);
 					environnement.getEspace()[positionX][positionY] = baby;
 					deplacement(direction, torique);
 					environnement.getEspace()[positionX][positionY] = this;

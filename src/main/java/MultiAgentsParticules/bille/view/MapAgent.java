@@ -1,7 +1,9 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.bille.view;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import MultiAgentsParticules.core.Agent;
 import javafx.scene.shape.*;
 
 public class MapAgent {

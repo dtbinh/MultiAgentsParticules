@@ -1,4 +1,4 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,21 +7,26 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
-import MultiAgentsParticules.bille.Bille;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
-import MultiAgentsParticules.hotPursuit.Hunted;
-import MultiAgentsParticules.hotPursuit.Hunter;
-import MultiAgentsParticules.hotPursuit.Wall;
-import MultiAgentsParticules.wator.Fish;
-import MultiAgentsParticules.wator.Shark;
+import MultiAgentsParticules.bille.model.Bille;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.hotPursuit.model.GameOverExcception;
+import MultiAgentsParticules.hotPursuit.model.Hunted;
+import MultiAgentsParticules.hotPursuit.model.Hunter;
+import MultiAgentsParticules.hotPursuit.model.Wall;
+import MultiAgentsParticules.wator.model.Fish;
+import MultiAgentsParticules.wator.model.Shark;
+import MultiAgentsParticules.wator.view.View;
 
 public class SMA extends Observable {
 
 	private static Environnement environnement = new Environnement();
 	private static List<Agent> agents = new LinkedList<Agent>();
 	private static View view;
-
-	public void initBille(int nbAgents, int width, int height) {
+	private static int mCurrentTurn = 0;
+	private static int cptFish;
+	private static int cptShark;
+	
+	public void initBille(int nbAgents,int width, int height) {
 		environnement.init(width, height);
 		Agent tmp;
 		Random r = new Random();
@@ -34,15 +39,17 @@ public class SMA extends Observable {
 				posX = r.nextInt(width);
 				posY = r.nextInt(height);
 			}
-			tmp = new Bille(posX, posY);
+			tmp = new Bille(posX, posY, 1);
 			environnement.getEspace()[posX][posY] = tmp;
 			tmp.setId(agents.size());
 			agents.add(tmp);
 		}
 	}
 
-	public void initFishShark(int nbFish, int nbShark, int width, int height) {
+	public void initFishShark(int nbFish, int nbShark, int nbCycleRepFish, int nbCycleRepShark, int nbCycleDeathShark,int roundForSpeakFish, int roundForSpeakShark, int width, int height) {
 		environnement.init(width, height);
+		this.setNbFish(nbFish);
+		this.setNbShark(nbShark);
 		Agent agent;
 		Random r = new Random();
 		int posX;
@@ -54,7 +61,7 @@ public class SMA extends Observable {
 				posX = r.nextInt(width);
 				posY = r.nextInt(height);
 			}
-			agent = new Fish(posX, posY, 2);
+			agent = new Fish(posX, posY, nbCycleRepFish ,roundForSpeakFish);
 			environnement.getEspace()[posX][posY] = agent;
 			agent.setId(agents.size());
 			agents.add(agent);
@@ -66,14 +73,14 @@ public class SMA extends Observable {
 				posX = r.nextInt(width);
 				posY = r.nextInt(height);
 			}
-			agent = new Shark(posX, posY, 3, 2);
+			agent = new Shark(posX, posY, nbCycleRepShark, nbCycleDeathShark,roundForSpeakShark);
 			environnement.getEspace()[posX][posY] = agent;
 			agent.setId(agents.size());
 			agents.add(agent);
 		}
 	}
 
-	public void initPursuit(int nbHunters, int nbWalls, int width, int height) {
+	public void initPursuit(int nbHunters, int nbWalls, int roundForSpeakHunter, int roundForSpeakHunted, int width, int height) {
 		environnement.initDijsktra(width, height);
 		Agent tmp;
 		Random r = new Random();
@@ -86,7 +93,7 @@ public class SMA extends Observable {
 				posX = r.nextInt(width);
 				posY = r.nextInt(height);
 			}
-			tmp = new Hunter(posX, posY);
+			tmp = new Hunter(posX, posY, roundForSpeakHunter);
 			environnement.getEspace()[posX][posY] = tmp;
 			tmp.setId(agents.size());
 			agents.add(tmp);
@@ -97,7 +104,7 @@ public class SMA extends Observable {
 			posX = r.nextInt(width);
 			posY = r.nextInt(height);
 		}
-		tmp = new Hunted(posX, posY);
+		tmp = new Hunted(posX, posY, roundForSpeakHunted);
 		environnement.getEspace()[posX][posY] = tmp;
 		tmp.setId(agents.size());
 		agents.add(tmp);
@@ -121,7 +128,7 @@ public class SMA extends Observable {
 		environnement.initMatrice(tmp);
 	}
 
-	public void run(boolean torique, int speed) throws InterruptedException {
+	public void run(boolean torique, int speed) throws InterruptedException, GameOverExcception {
 		Collections.shuffle(agents);
 		List<Agent> list;
 		while (true) {
@@ -131,6 +138,7 @@ public class SMA extends Observable {
 			for (Agent a : list) {
 				a.doIt(torique);
 			}
+			mCurrentTurn++;
 			this.setChanged();
 			notifyObservers();
 			Thread.sleep(speed);
@@ -138,7 +146,7 @@ public class SMA extends Observable {
 		}
 	}
 
-	public void runJFX(boolean torique, int speed) throws InterruptedException {
+	public void runJFX(boolean torique, int speed) throws InterruptedException, GameOverExcception {
 		Collections.shuffle(agents);
 		List<Agent> list;
 		// System.out.println("********** ROUND "+ i +" *********");
@@ -147,14 +155,15 @@ public class SMA extends Observable {
 		for (Agent a : list) {
 			a.doIt(torique);
 		}
+		mCurrentTurn++;
 		this.setChanged();
 		notifyObservers();
 		// nbTypeOfAgent();
 	}
 
 	public static void nbTypeOfAgent() {
-		int cptFish = 0;
-		int cptShark = 0;
+		cptFish = 0;
+		cptShark = 0;
 		for (Agent a : agents) {
 			if (a.getType() == TypeOfAgentEnum.FISH)
 				cptFish++;
@@ -171,6 +180,26 @@ public class SMA extends Observable {
 
 	public static Environnement getEnvironnement() {
 		return environnement;
+	}
+
+	public int getCurrentTurn() {
+		return mCurrentTurn;
+	}
+
+	public static int getNbFish() {
+		return cptFish;
+	}
+
+	public static void setNbFish(int nbFish) {
+		SMA.cptFish = nbFish;
+	}
+
+	public static int getNbShark() {
+		return cptShark;
+	}
+
+	public static void setNbShark(int nbShark) {
+		SMA.cptShark = nbShark;
 	}
 
 }

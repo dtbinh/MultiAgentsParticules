@@ -1,11 +1,12 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
-import MultiAgentsParticules.hotPursuit.Hunted;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.hotPursuit.model.Empty;
+import MultiAgentsParticules.hotPursuit.model.Hunted;
 
 public class Environnement {
 
@@ -78,12 +79,6 @@ public class Environnement {
 
 	public void updateMatrice(int x, int y) {
 		int neighborvalue = matriceDijkstra[x][y] + 1;
-		
-		// System.out.println("Proie : [" + chased.getPositionX() + ";" +
-		// chased.getPositionY() + "]");
-
-		// System.out.println(chased);
-
 		Iterator<Agent> it = getNeighbors(x,y).iterator();
 		while (it.hasNext()) {
 			Agent neighbor = it.next();
@@ -91,12 +86,10 @@ public class Environnement {
 				matriceDijkstra[neighbor.getPositionX()][neighbor.getPositionY()] = neighborvalue;
 				updateMatrice(neighbor.getPositionX(), neighbor.getPositionY());
 			}
-			// System.out.println(neighbor);
-			//if(matriceDijkstra[neighbor.getPositionX()][neighbor.getPositionY()] == -1)
-			//	matriceDijkstra[neighbor.getPositionX()][neighbor.getPositionY()] += 1;
-		}
-				
+		}			
 	}
+	
+	
 	public List<Agent> getNeighbors(int x, int y){
 		ArrayList<Agent> agents = new ArrayList<Agent>();
 	    int neighborX, neighborY;

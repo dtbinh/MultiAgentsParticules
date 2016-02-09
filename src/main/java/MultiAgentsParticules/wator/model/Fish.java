@@ -1,21 +1,21 @@
-package MultiAgentsParticules.wator;
+package MultiAgentsParticules.wator.model;
 
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import MultiAgentsParticules.Agent;
-import MultiAgentsParticules.SMA;
-import MultiAgentsParticules.enums.DirectionEnum;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.Agent;
+import MultiAgentsParticules.core.SMA;
+import MultiAgentsParticules.core.enums.DirectionEnum;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
 
 public class Fish extends Agent {
 
 	private static int compteurReproduction = 0;
 
-	public Fish(int positionX, int positionY, int nbCycleReproduction) {
-		super(positionX, positionY);
+	public Fish(int positionX, int positionY, int nbCycleReproduction, int roundForSpeak) {
+		super(positionX, positionY,roundForSpeak);
 		this.setColor(Color.CYAN);
 		r = Color.CYAN.getRed();
 		g = Color.CYAN.getGreen();
@@ -48,7 +48,7 @@ public class Fish extends Agent {
 			// on libere la case
 			if (compteurReproduction >= nbCycleReproduction) {
 				compteurReproduction = 0;
-				Agent baby = new Fish(positionX, positionY, nbCycleReproduction);
+				Agent baby = new Fish(positionX, positionY, nbCycleReproduction,roundForSpeak);
 				SMA.getAgents().add(baby);
 				environnement.getEspace()[positionX][positionY] = baby;
 				deplacement(direction, torique);

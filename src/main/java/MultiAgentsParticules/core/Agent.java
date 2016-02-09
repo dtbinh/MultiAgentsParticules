@@ -1,12 +1,13 @@
-package MultiAgentsParticules;
+package MultiAgentsParticules.core;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import MultiAgentsParticules.enums.DirectionEnum;
-import MultiAgentsParticules.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.core.enums.DirectionEnum;
+import MultiAgentsParticules.core.enums.TypeOfAgentEnum;
+import MultiAgentsParticules.hotPursuit.model.GameOverExcception;
 
 public abstract class Agent {
 
@@ -28,13 +29,19 @@ public abstract class Agent {
 	protected Color color;
 	protected TypeOfAgentEnum type;
 	protected int nbCycleReproduction;
+	protected int roundForSpeak;
 
-	public Agent(int positionX, int positionY) {
+	public Agent(int positionX, int positionY, int roundForSpeak) {
 		this.setPositionX(positionX);
 		this.setPositionY(positionY);
+		this.setRoundForSpeak(roundForSpeak);
 	}
 
-	public abstract void doIt(boolean torique);
+	private void setRoundForSpeak(int roundForSpeak) {
+		this.roundForSpeak = roundForSpeak;
+	}
+
+	public abstract void doIt(boolean torique) throws GameOverExcception;
 
 	public void deplacement(DirectionEnum direction, boolean torique) {
 		switch (direction) {

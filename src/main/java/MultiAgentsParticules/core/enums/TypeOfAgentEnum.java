@@ -1,4 +1,4 @@
-package MultiAgentsParticules.enums;
+package MultiAgentsParticules.core.enums;
 
 public enum TypeOfAgentEnum {
 
